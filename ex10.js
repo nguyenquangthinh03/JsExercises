@@ -2,7 +2,9 @@ function formatWhitespace(arr) {
   for (let i = 0; i < arr.length; i++) {
       //Check elements is whitespaces?
       // if true convert element into 1 whitespace
-      if (typeof arr[i] === 'string' && arr[i].trim().length === 0 && arr[i].length !== 0) {
+      isWhiteSpaceString = typeof arr[i] === 'string' && !arr[i].trim().length
+      isNotNull = arr[i].length
+      if (isWhiteSpaceString && isNotNull) {
           arr[i] = " ";
       }
   }
