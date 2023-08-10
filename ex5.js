@@ -1,9 +1,15 @@
-function getMiddle(s){
-    var  m = Math.round(s.length / 2)
-    if(s.length % 2 == 0){
-        console.log(s[m -1] + s[m])    
+function getMiddle(stringInput){
+    var  middleChar = Math.round(stringInput.length / 2)
+    if(stringInput.length % 2 == 0){
+        console.log(stringInput[middleChar -1] + stringInput[middleChar])    
     }
     else{
-        console.log(s[m-1])
+        console.log(stringInput[middleChar-1])
     }
 }
+// Test case
+getMiddle("test")
+getMiddle("   test")
+getMiddle("test       ")
+getMiddle("")
+getMiddle(" ")

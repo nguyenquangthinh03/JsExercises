@@ -1,6 +1,7 @@
-// ex1
 function formatWhitespace(arr) {
   for (let i = 0; i < arr.length; i++) {
+      //Check elements is whitespaces?
+      // if true convert element into 1 whitespace
       if (typeof arr[i] === 'string' && arr[i].trim().length === 0 && arr[i].length !== 0) {
           arr[i] = " ";
       }
@@ -8,141 +9,186 @@ function formatWhitespace(arr) {
   return arr;
 }
 function similar(arr1, arr2){
-  arr3 = []
+  arrResult = []
   // format whitespace
   formatWhitespace(arr1)
   formatWhitespace(arr2)
   arr1.filter(element => {
       // same element
-      if(arr2.includes(element) && arr3.includes(element) === false){
-          arr3.push(element)
+      elementInArr2 = arr2.includes(element) 
+      elementNotInArrResult = !arrResult.includes(element)
+      if(elementInArr2 && elementNotInArrResult){
+          arrResult.push(element)
       }
   })
-  return JSON.stringify(arr3.sort())
+  return JSON.stringify(arrResult.sort())
 }
 function diff(arr1, arr2){
-  arr3 = []
+  arrResult = []
    // format whitespace
   formatWhitespace(arr1)
   formatWhitespace(arr2)
   // find diff from 2 arr
-  arr1.filter(element => {
-
-      // diff element
-      if(arr2.includes(element) === false && arr3.includes(element) === false){
-          arr3.push(element)
-      }
-  })
   arr2.filter(element => {
-
-      //diff element
-      if(arr1.includes(element) === false && arr3.includes(element) === false){
-          arr3.push(element)
+      // diff element
+      elementNotInArr2 = !arr1.includes(element) 
+      elementInArrResult = !arrResult.includes(element)
+      if(elementNotInArr2  && elementInArrResult){
+          arrResult.push(element)
       }
   })
-  return JSON.stringify(arr3.sort())
+  arr1.filter(element => {
+      //diff element
+      elementNotInArr1 = !arr2.includes(element) 
+      elementInArrResult = !arrResult.includes(element)
+      if(elementNotInArr1 && elementInArrResult){
+          arrResult.push(element)
+      }
+  })
+  return JSON.stringify(arrResult.sort())
 }
+// Test case
+// console.log(similar(["bbc", "abc", " bbc", "", " ", 1, "2", "  2"], ["bbc","abc", " abc", "        ", 1, 2]))
+// console.log(diff(["bbc", "abc"," bbc", "", " ", 1, "2", "  2"], ["bbc","abc", " abc", "        ", 1, 2]))
+// console.log(similar([], [""]))
+// console.log(diff([], [""]))
+
+
+
 //ex2
-function uppercase(x){
-    var arr = x.split('')
-      for(var i = 0; i<arr.length; i++){
-        if((arr[i] !== " " && arr[i-1] === " ") || (i===0 && arr[i] !==" ")){
+function uppercase(stringInput){
+  stringInput = stringInput.trim();
+  var arr = stringInput.split('')
+    for(var i = 0; i<arr.length; i++){
+      if(i !== 0){
+      checkFirstCharInWord = (arr[i] !== " " && arr[i-1] === " ")
+      if(checkFirstCharInWord){
+        arr[i] = arr[i].toUpperCase();
+      }
+      }
+      else {
+        checkFirstWordInArr = (i===0 && arr[i] !==" ")
+        if(checkFirstWordInArr){
           arr[i] = arr[i].toUpperCase();
         }
       }
-      x = arr.join('');
-      return JSON.stringify(x.trim());
-  }
-// ex3
-function sum(x){
-    var a = x
-    var sum = 0
-    if(a == null) sum = 0
-    else{
-      for(var i=0; i<a.length; i++)
-      {
-       sum = a[i] + sum
-      }
+
     }
-    if(sum % 2 == 0) result = "even";
-    else result = "odd";
-    return JSON.stringify(result)
-  }
+    uppercaseWord = arr.join('');
+    return JSON.stringify(uppercaseWord) ;
+}
+// Test case
+// console.log(uppercase("aBc stringInputyz kkk"))
+// console.log(uppercase("          abstringInput kkk          "))
+
+// ex3
+function sum(arrInput){
+  var sum = 0
+   if(arrInput == null) sum = 0
+   else{
+     for(var i=0; i<arrInput.length; i++)
+     {
+      sum = arrInput[i] + sum
+     }
+   }
+   if(sum % 2 == 0) result = "even"
+   else result = "odd"
+   return JSON.stringify(result)
+ }
+// Test case
+// console.log(sum([-1, -2, 2 ,3]))
+// console.log(sum([0,1,-2]))
+// console.log(sum([]))
 // ex4
-function lots_of_math(a,b,c,d){
-  result = {}
-    console.log(a+b)
-    result.sum = a+b
-    console.log(c-d)
-    result.minus = c-d
-    var x = (a+b) * (c-d)
-    console.log(x)
-    result.product = x
-    result.modulo = x % a
-    return JSON.stringify(result)
-  }
+function lots_of_math(firstNum,secondNum,thirdNum,fourthNum){
+  let result = {}
+  result.sum = firstNum + secondNum
+  result.minus = thirdNum - fourthNum
+  result.productOfSumAndMinus = (firstNum+secondNum) * (thirdNum-fourthNum)
+  result.modulo = result.productOfSumAndMinus % firstNum
+  return JSON.stringify(result)
+}
+// Test case
+// console.log(lots_of_math(1,2,3,4))
+// console.log(lots_of_math(0,-2,3,-4))
 
  // ex5 
-  function getMiddle(s){
-    var  m = Math.round(s.length / 2)
-    if(s.length % 2 == 0){
-       result = s[m -1] + s[m]
-    }
-    else{
-        result = s[m-1]
-    }
-    return JSON.stringify(result)
-}
-
-// ex6
-function descendingOrder(number){
-    number = number.toString();
-    var digit = number.split('');
-    digit.sort(function(a,b){return b-a});
-    number = digit.join('')
-    return JSON.stringify(number);
-}
-//ex7
-function unique_in_order(s){
-    var a = []
-    var i = 0
-    while(i < s.length){
-        while(s[i] === s[i+1]){
-            i++
-        }
-        a.push(s[i])
-        i++;
-    }
-    return JSON.stringify(a)
-}
-
-//ex8
-function outlier(a){
-    var odd = 0,
-    even = 0;
-    var result;
-  for (var i = 0; i < 3; i++) {
-    if (a[i] % 2 === 0) {
-      even += 1;
-    } else odd += 1;
+ function getMiddle(stringInput){
+  var result
+  var  middleChar = Math.round(stringInput.length / 2)
+  if(stringInput.length % 2 == 0){
+      result = stringInput[middleChar -1] + stringInput[middleChar]
   }
-  if (even >= 2) {
-    for (i = 0; i < a.length; i++) {
-      if (a[i] % 2 !== 0) {
-        result = a[i];
-        break;
-      }
-    }
-  } else if (odd >= 2) {
-    for (i = 0; i < a.length; i++) {
-      if (a[i] % 2 === 0) {
-        result = a[i];
-        break;
-      }
-    }
+  else{
+      result = stringInput[middleChar-1]
   }
   return JSON.stringify(result)
 }
+// Test case
+// console.log(getMiddle("test"))
+// console.log(getMiddle("   test"))
+// console.log(getMiddle("test       "))
+// console.log(getMiddle(""))
+// console.log(getMiddle(" "))
+
+// ex6
+function descendingOrder(number){
+  var digit = number.split('');
+  digit.sort(function(a,b){return b-a});
+  number = digit.join('')
+  return JSON.stringify(number*1); // convert to number
+}
+// Test case
+// console.log(descendingOrder("123"))
+// console.log(descendingOrder("0001203"))
+//ex7
+function unique_in_order(stringInput){
+  var arr = []
+  var i = 0
+  while(i < stringInput.length){
+      //check similiar
+      while(stringInput[i] == stringInput[i+1]){
+          i++
+      }
+      arr.push(stringInput[i])
+      // not similiar
+      i++;
+  }
+  return JSON.stringify(arr)
+}
+// Test case
+// console.log(unique_in_order("aaaaaaa          bbbbbbbbb aaaaaaaaaaaaaAAAAAAAAAAA1111112222222       "))
+
+//ex8
+function outlier(arrInput){
+  var odd = 0,
+  even = 0;
+// check array odd or even ?
+for (var i = 0; i < 3; i++) {
+  if (arrInput[i] % 2 === 0) {
+    even += 1;
+  } else odd += 1;
+}
+//array even
+if (even >= 2) {
+  for (i = 0; i < arrInput.length; i++) {
+    if (arrInput[i] % 2 !== 0) {
+      return JSON.stringify(arrInput[i]);
+    }
+  }
+}
+// array odd 
+else if (odd >= 2) {
+  for (i = 0; i < arrInput.length; i++) {
+    if (arrInput[i] % 2 === 0) {
+      return JSON.stringify(arrInput[i]);
+    }
+  }
+}
+}
+// Test case
+// console.log(outlier([1,2,3,5,6]))
+// console.log(outlier([2,3,4,6,8,8,8,8,88,8,8,88,8,8,88,8,8,8]))
 
 
 

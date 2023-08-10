@@ -1,13 +1,16 @@
-function sum(x){
-    var a = x
-    var sum = 0
-    if(a == null) sum = 0
+function sum(arrInput){
+   var sum = 0
+    if(arrInput == null) sum = 0
     else{
-      for(var i=0; i<a.length; i++)
+      for(var i=0; i<arrInput.length; i++)
       {
-       sum = a[i] + sum
+       sum = arrInput[i] + sum
       }
     }
     if(sum % 2 == 0) console.log("even");
     else console.log("odd")
   }
+// Test case
+sum([])
+sum([-1, -2, 2 ,3])
+sum([0,1,-2])

@@ -1,14 +1,16 @@
-function unique_in_order(s){
-    var a = []
+function unique_in_order(stringInput){
+    var arr = []
     var i = 0
-    while(i < s.length){
+    while(i < stringInput.length){
         //check similiar
-        while(s[i] === s[i+1]){
+        while(stringInput[i] == stringInput[i+1]){
             i++
         }
-        a.push(s[i])
+        arr.push(stringInput[i])
         // not similiar
         i++;
     }
-    console.log(a)
+    console.log(arr)
 }
+// Test case
+unique_in_order("aaaaaaa          bbbbbbbbb aaaaaaaaaaaaaAAAAAAAAAAA1111112222222       ")
